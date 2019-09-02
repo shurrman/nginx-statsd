@@ -1,0 +1,31 @@
+--- a/src/core/ngx_resolver.c   Tue Apr 04 18:01:57 2017 +0300
++++ b/src/core/ngx_resolver.c   Tue Apr 11 17:37:26 2017 +0200
+@@ -56,10 +56,6 @@
+         ((u_char *) (n) - offsetof(ngx_resolver_node_t, node))
+ 
+ 
+-static ngx_int_t ngx_udp_connect(ngx_resolver_connection_t *rec);
+-static ngx_int_t ngx_tcp_connect(ngx_resolver_connection_t *rec);
+-
+-
+ static void ngx_resolver_cleanup(void *data);
+ static void ngx_resolver_cleanup_tree(ngx_resolver_t *r, ngx_rbtree_t *tree);
+ static ngx_int_t ngx_resolve_name_locked(ngx_resolver_t *r,
+@@ -4379,7 +4375,7 @@
+ }
+ 
+ 
+-static ngx_int_t
++ngx_int_t
+ ngx_udp_connect(ngx_resolver_connection_t *rec)
+ {
+     int                rc;
+@@ -4463,7 +4459,7 @@
+ }
+ 
+ 
+-static ngx_int_t
++ngx_int_t
+ ngx_tcp_connect(ngx_resolver_connection_t *rec)
+ {
+     int                rc;
