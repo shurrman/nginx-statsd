@@ -1,0 +1,58 @@
+# HG changeset patch
+# User zyegfryed
+# Date 1491925046 -7200
+#      Tue Apr 11 17:37:26 2017 +0200
+# Node ID 2906f12bacd375ea626cefac5e028531c8c605f7
+# Parent  29ba1d6a2da9320e68ef2b7a2516c4c424672ea8
+#Externalize ngx_udp_connect and ngx_tcp_connect functions
+
+#The aforementionned functions are used in many external modules [1] but
+#since changeset [6922:a72886067bbb], they are not publicly available,
+#hence breaking any module using them. This patch adress that issue.
+
+#[1]: https://github.com/search?q=ngx_udp_connect&type=Code
+
+diff -r 29ba1d6a2da9 -r 2906f12bacd3 src/core/ngx_resolver.c
+--- a/src/core/ngx_resolver.c	Tue Apr 04 18:01:57 2017 +0300
++++ b/src/core/ngx_resolver.c	Tue Apr 11 17:37:26 2017 +0200
+@@ -56,10 +56,6 @@
+         ((u_char *) (n) - offsetof(ngx_resolver_node_t, node))
+ 
+ 
+-static ngx_int_t ngx_udp_connect(ngx_resolver_connection_t *rec);
+-static ngx_int_t ngx_tcp_connect(ngx_resolver_connection_t *rec);
+-
+-
+ static void ngx_resolver_cleanup(void *data);
+ static void ngx_resolver_cleanup_tree(ngx_resolver_t *r, ngx_rbtree_t *tree);
+ static ngx_int_t ngx_resolve_name_locked(ngx_resolver_t *r,
+@@ -4379,7 +4375,7 @@
+ }
+ 
+ 
+-static ngx_int_t
++ngx_int_t
+ ngx_udp_connect(ngx_resolver_connection_t *rec)
+ {
+     int                rc;
+@@ -4463,7 +4459,7 @@
+ }
+ 
+ 
+-static ngx_int_t
++ngx_int_t
+ ngx_tcp_connect(ngx_resolver_connection_t *rec)
+ {
+     int                rc;
+diff -r 29ba1d6a2da9 -r 2906f12bacd3 src/core/ngx_resolver.h
+--- a/src/core/ngx_resolver.h	Tue Apr 04 18:01:57 2017 +0300
++++ b/src/core/ngx_resolver.h	Tue Apr 11 17:37:26 2017 +0200
+@@ -235,4 +235,8 @@
+ char *ngx_resolver_strerror(ngx_int_t err);
+ 
+ 
++ngx_int_t ngx_udp_connect(ngx_resolver_connection_t *rec);
++ngx_int_t ngx_tcp_connect(ngx_resolver_connection_t *rec);
++
++
+ #endif /* _NGX_RESOLVER_H_INCLUDED_ */
