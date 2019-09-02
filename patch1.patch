@@ -1,0 +1,11 @@
+--- a/src/core/ngx_resolver.h   Tue Apr 04 18:01:57 2017 +0300
++++ b/src/core/ngx_resolver.h   Tue Apr 11 17:37:26 2017 +0200
+@@ -235,4 +235,8 @@
+ char *ngx_resolver_strerror(ngx_int_t err);
+ 
+ 
++ngx_int_t ngx_udp_connect(ngx_resolver_connection_t *rec);
++ngx_int_t ngx_tcp_connect(ngx_resolver_connection_t *rec);
++
++
+ #endif /* _NGX_RESOLVER_H_INCLUDED_ */
